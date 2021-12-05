@@ -19,27 +19,54 @@ function jump(currentPlace, N) {
 // it can goes one left or one right
 // find the rabbit
 
+function play(N) {
+    let step = 0;
+    let rabbitPlace = Math.floor(Math.random() * N)
+
+    let initialPlace = rabbitPlace;
+
+    for (i = N % 2; i < N; i++) {
+        step++;
+        if (i == rabbitPlace) {
+            return {
+                rabbitPlace,
+                step,
+                initialPlace
+            }
+        } else {
+            rabbitPlace = jump(rabbitPlace, N)
+        }
+    }
+
+    for (i = (N + 1) % 2; i < N; i++) {
+        if (i == rabbitPlace) {
+            // console.log(`rabbit has been found at ${rabbitPlace} in ${step} steps. The initial places was ${initialPlace}`)
+            return {
+                rabbitPlace,
+                step,
+                initialPlace
+            }
+        } else {
+            rabbitPlace = jump(rabbitPlace, N)
+        }
+    }
+    throw new Error("never comes here")
+
+}
 
 
 
 function main() {
-    let N = 1000;
-    let step = 0;
-    let rabbitPlace = Math.floor(Math.random() * N)
-    let initialPlace = rabbitPlace;
+    let results = []
+    let c = 1e5;
+    let N = 100+1;
+    for (let i = 0; i < c; i++) {
+        let result = play(N)
+        results.push(result);
 
-    for (let k = 1; k < N - 1; k++) {
-        for (let i = 0; i < N; i = i + k) {
-            step++
-            if (i == rabbitPlace) {
-                console.log(`rabbit has been found at ${rabbitPlace} in ${step} steps. The initial places was ${initialPlace}`)
-                return;
-            } else {
-                rabbitPlace = jump(rabbitPlace, N)
-            }
-        }
     }
 
+    results = results.sort((a, b) => a.step - b.step).reverse()
+    console.log(results.slice(0, 10));
 }
-
 main();
