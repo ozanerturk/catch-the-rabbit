@@ -40,7 +40,6 @@ function play(N) {
 
     for (i = (N + 1) % 2; i < N; i++) {
         if (i == rabbitPlace) {
-            // console.log(`rabbit has been found at ${rabbitPlace} in ${step} steps. The initial places was ${initialPlace}`)
             return {
                 rabbitPlace,
                 step,
